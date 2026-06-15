@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 'Gradient Descent from First Principles L-Smoothness and the Descent Lemma'
-date: 2026-05-20
+title: 'Gradient Descent from First Principles: L-Smoothness and the Descent Lemma'
+date: 2026-05-31
 ---
 
 ## I. Motivation for Gradient Descent
