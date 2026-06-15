@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ page.title }} | {{ site.title }}</title>
+
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/styles.css">
+
+</head>
+
+<body>
+
+  <!-- HERO BANNER (shared across ALL pages) -->
+  <header class="hero">
+    <img class="hero-image" src="{{ site.baseurl }}/assets/img/lotus-hero.jpeg" alt="Lotus">
+    <img class="hero-logo" src="{{ site.baseurl }}/assets/img/logo.png" alt="logo">
+  </header>
+
+  <main class="content">
+
+
+
+    <!-- NAVIGATION -->
+    <nav class="site-nav">
+     <a href="{{ site.baseurl }}/">Home</a>
+     <span>|</span>
+     <a href="{{ site.baseurl }}/blog/">Blog</a>
+    </nav>
+
+    <!-- SITE TITLE -->
+    <h1 class="site-title">Mathematics for Machine Learning</h1>
+
+    <!-- AUTHOR -->
+    <p class="site-author">RUTUJA JADHAV</p>
+
+    <!-- SOCIAL ICONS -->
+    <div class="social-links">
+      <a href="https://github.com">GitHub</a>
+      <a href="https://yourwebsite.com">Website</a>
+      <a href="https://linkedin.com">LinkedIn</a>
+    </div>
+
+
+
+    <!-- PAGE SPECIFIC CONTENT -->
+    {{ content }}
+    <script>
+    window.MathJax = {
+        tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+    </script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 Rutuja Jadhav</p>
+  </footer>
+  
+
+</body>
+</html>

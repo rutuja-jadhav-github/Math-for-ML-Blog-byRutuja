@@ -1,0 +1,8 @@
+title: Mathematics for Machine Learning
+description: Learning mathematics for machine learning, one concept at a time.
+
+baseurl: "/Math-for-ML-Blog-byRutuja"
+url: "https://rutuja-jadhav-github.github.io"
+
+markdown: kramdown
+permalink: /:title/
