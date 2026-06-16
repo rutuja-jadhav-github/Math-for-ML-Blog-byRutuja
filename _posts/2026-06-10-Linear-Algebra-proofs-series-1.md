@@ -271,9 +271,7 @@ Hence, proven.
 
 ----
 
-Linking back to the OLS closed form solution, we see that since $X^TX$ is square and full rank, it is invertible, which justifies the appearance of $(X^TX)^{-1}$ . 
-
-in the closed-form solution for $\theta^*$
+Linking back to the OLS closed form solution, we see that since $X^TX$ is square and full rank, it is invertible, which justifies the appearance of $(X^TX)^{-1}$ in the closed-form solution for $\theta^*$
 
 ----
 
