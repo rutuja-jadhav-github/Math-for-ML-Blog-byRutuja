@@ -17,79 +17,31 @@ $$
 
 The inverse of $X^TX$ is what allows us to solve for the optimal parameters directly. But this raises an important question:
 
-> When is $X^TX$ invertible in the first place?
+> When is $X^TX$ invertible? Are there any specific properties of $X$ that make $X^TX$ invertible?
 
-or more specifically,
+In this post, we will prove this result from first principles using the concept of the **kernel (null space)** of a matrix.
 
-> How does $X$ being full rank imply that $X^TX$ is also full rank and invertible?
+---
 
-## II. When Is $X$ Full Rank?
+## II. Proof Strategy
 
-Recall that a matrix is **full rank** when its columns are linearly independent, or no combination of the columns produces another, or the kernel (null space) of the matrix is trivial.
-
-There are two common situations in which this occurs.
-
-### Square matrices
-
-If
+Rather than reasoning directly about invertibility, we will first prove the following result:
 
 $$
-X\in\mathbb R^{n\times n},
+\operatorname{Ker}(X)
+=
+\operatorname{Ker}(X^TX).
 $$
 
-then $X$ is full rank when all of its columns are linearly independent. In this case,
+At first glance, this may not seem to answer our original question. However, this equality turns out to be the key observation.
 
-$$
-\mathrm{rank}(X)=n,
-$$
+**Once we know that $X$ and $X^TX$ have exactly the same kernel, determining whether $X^TX$ is invertible, reduces to whether the kernel of $X$ is trivial.**
 
-and $X$ is invertible.
+---
 
-### Tall rectangular matrices
+## III. Proof
 
-If
-
-$$
-X\in\mathbb R^{m\times n},
-\qquad m>n,
-$$
-
-then $X$ can still have linearly independent columns. In this case,
-
-$$
-\mathrm{rank}(X)=n,
-$$
-
-and we say that $X$ has **full column rank**.
-
-Although such a matrix is not square and therefore cannot itself be inverted, none of its columns are redundant.
-
-### Wide matrices are never full column rank
-
-If
-
-$$
-X\in\mathbb R^{m\times n},
-\qquad m<n,
-$$
-
-then there are more columns than rows.
-
-In this case, some columns must necessarily be linear combinations of others, meaning the columns cannot all be independent. Equivalently,
-
-$$
-\mathrm{rank}(X)
-\le m
-<n.
-$$
-
-From a geometric point of view, many different input vectors are being compressed into a smaller output space. Information is lost, so the transformation cannot be one-to-one, and therefore cannot be invertible.
-
-Now that we understand what makes $X$ full rank, let us prove that this also makes $X^TX$ full rank.
-
-## III. Approach and Premise
-
-Rather than working directly with ranks, we will **compare the kernels** of the two matrices.
+Now let's **compare the kernels** of the two matrices to proove they are equal.
 
 Recall the **basic set theory** idea:
 
@@ -123,8 +75,6 @@ $$
 \mathrm{rank}(X^TX).
 $$
 
-
-## IV. Proof
 
 First, to show
 
@@ -177,7 +127,6 @@ $$
 \mathrm{Ker}(X^TX).
 }
 $$
-
 
 
 
@@ -242,36 +191,232 @@ $$
 **Since each null space is contained inside the other, we have,**
 
 $$
+\boxed{
 \mathrm{Ker}(X)
 =
 \mathrm{Ker}(X^TX).
-$$
-
-**Applying the Rank-Nullity Theorem:**
-
-$$
-\mathrm{rank}(A)+\mathrm{nullity}(A)
-=
-\text{number of columns of }A,
-$$
-
-and since both $X$ and $X^TX$ have the same number of columns, it follows that
-
-$$
-\boxed{
-\mathrm{rank}(X)
-=
-\mathrm{rank}(X^TX)
 }
 $$
 
-Therefore, if $X$ has full column rank, then $X^TX$ also has full rank.
-
-Hence, proven.
 
 ----
 
-Linking back to the OLS closed form solution, we see that since $X^TX$ is square and full rank, it is invertible, which justifies the appearance of $(X^TX)^{-1}$ in the closed-form solution for $\theta^*$
+## IV. Does Full Rank X alone Make $X^TX$ Invertible?
+
+From the previous section, we have established that
+
+$$
+\operatorname{Ker}(X)
+=
+\operatorname{Ker}(X^TX).
+$$
+
+In ML, a **common statement we encounter is 'if $X$ is full rank, then $X^TX$ is invertible'**. Almost, as if to say, if $X$ is full rank, its kernel is trivial, and since $X$ and $X^TX$ share the same kernel, $X^TX$ also has a trivial kernel. Therfore, it is invertible. 
+
+**However, not all full rank matrices have a trivial kernel** (eg.wide rectangular full rank). **And not all matrices with a trivial kernel are invertible** (eg. tall rectangular matric with full rank is not invertible despite having a trivial kernel).
+
+**Thus, $X$ being full rank alone, does not guarnatee a trivial kernel and invertibility! In addition to the rank of a matrix, whether or not a kernel is trivial and invertible, depends on the shape of the matrix.**.
+
+Let us examine the three possible cases.
+
+### Case 1: Square matrices
+
+Suppose
+
+$$
+X\in\mathbb R^{n\times n},
+$$
+
+and $X$ is full rank.
+
+Then
+
+$$
+\operatorname{rank}(X)=n.
+$$
+
+By the Rank-Nullity Theorem,
+
+$$
+\dim(\operatorname{Ker}(X))
+=
+n-n
+=
+0.
+$$
+
+Hence,
+
+$$
+\operatorname{Ker}(X)
+=
+\operatorname{Ker}(X^TX)
+=
+\{0\}.
+$$
+
+**Since both $X$ and $X^TX$ are square matrices (1-1 mapping) with trivial kernels, both are invertible**.
+
+---
+
+### Case 2: Tall rectangular matrices
+
+Suppose
+
+$$
+X\in\mathbb R^{m\times n},
+\qquad m>n.
+$$
+
+If $X$ is full rank, then
+
+$$
+\operatorname{rank}(X)=n.
+$$
+
+Again, by the Rank-Nullity Theorem,
+
+$$
+\dim(\operatorname{Ker}(X))
+=
+n-n
+=
+0.
+$$
+
+Hence,
+
+$$
+\operatorname{Ker}(X)
+=
+\operatorname{Ker}(X^TX)
+=
+\{0\}.
+$$
+
+Notice, however, that **$X$ itself is not invertible, despite being full rank**. The reason is that $X$ is tall rectangular, so there exist output vectors
+
+$$
+b\notin\operatorname{Col}(X),
+$$
+
+for which
+
+$$
+Xx=b
+$$
+
+has no solution in the input space and therefore cannot be inverted.
+
+**However, unlike its tall rectangular full-rank parent X,**
+
+$$
+X^TX
+\in
+\mathbb R^{n\times n}
+$$
+
+**is square. And, since it also has a trivial kernel, $X^TX$ is invertible.**
+
+---
+
+### Case 3: Wide rectangular matrices
+
+Suppose
+
+$$
+X\in\mathbb R^{m\times n},
+\qquad m<n.
+$$
+
+If $X$ is full rank, then
+
+$$
+\operatorname{rank}(X)=m.
+$$
+
+Applying the Rank-Nullity Theorem,
+
+$$
+\dim(\operatorname{Ker}(X))
+=
+n-m
+>
+0.
+$$
+
+Therefore,
+
+$$
+\operatorname{Ker}(X)
+=
+\operatorname{Ker}(X^TX)
+\neq
+\{0\}.
+$$
+
+Again, **$X$ itself is not invertible**, despite being full rank.
+
+Although every output vector is reachable, different input vectors can produce the same output because the kernel is nontrivial.
+
+Since $X^TX$ inherits this same nontrivial kernel, it is also **not invertible**.
+
+---
+
+The three cases can be summarized as follows.
+
+| Shape of $X$ | Full rank | $\operatorname{Ker}(X)$ | Is $X$ invertible? | Is $X^TX$ invertible? |
+|:---|:---:|:---:|:---:|:---:|
+| Square | ✓ | $\{0\}$ | ✓ | ✓ |
+| Tall | ✓ | $\{0\}$ | ✗ | ✓ |
+| Wide | ✓ | Nontrivial | ✗ | ✗ |
+
+We therefore conclude that **a full rank matrix does not automatically imply that $X^TX$ is invertible**.
+
+Rather, the **deciding factor is whether the common kernel of $X$ and $X^TX$ is trivial**.
+
+**This occurs when $X$ is either**
+
+- **a full rank square matrix**, or
+- **a full rank tall matrix.**
+
+In contrast, a full rank wide matrix always has a nontrivial kernel, so neither $X$ nor $X^TX$ is invertible.
+
+
+
+
+
+
+---
+
+Returning to the Ordinary Least Squares solution,
+
+$$
+\theta^*
+=
+(X^TX)^{-1}X^Ty,
+$$
+
+we now see why the inverse exists.
+
+As long as the design matrix $X$ has **full column rank**, the matrix
+
+$$
+X^TX
+$$
+
+is **square, has a trivial kernel, and is therefore invertible**.
+
+This is precisely what justifies the appearance of
+
+$$
+(X^TX)^{-1}
+$$
+
+in the closed-form solution for Ordinary Least Squares.
+
+If X were wide and full rank, it would still have a non trivial kernel, not be invertible and result in an
+$X^TX$ which, although square, would be rank deficit with the same non trivial kernel and therefore not invertible either.
 
 ----
 
