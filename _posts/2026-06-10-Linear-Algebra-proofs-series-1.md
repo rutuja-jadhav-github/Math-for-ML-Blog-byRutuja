@@ -213,9 +213,9 @@ $$
 
 In ML, a **common statement we encounter is 'if $X$ is full rank, then $X^TX$ is invertible'**. Almost, as if to say, if $X$ is full rank, its kernel is trivial, and since $X$ and $X^TX$ share the same kernel, $X^TX$ also has a trivial kernel. Therfore, it is invertible. 
 
-**However, not all full rank matrices have a trivial kernel** (eg.wide rectangular full rank). **And not all matrices with a trivial kernel are invertible** (eg. tall rectangular matric with full rank is not invertible despite having a trivial kernel).
+**However, not all full rank matrices have a trivial kernel** (eg.wide rectangular full rank). **And not all matrices with a trivial kernel are invertible** (eg. a tall rectangular matrix with full rank is not invertible despite having a trivial kernel).
 
-**Thus, $X$ being full rank alone, does not guarnatee a trivial kernel and invertibility! In addition to the rank of a matrix, whether or not a kernel is trivial and invertible, depends on the shape of the matrix.**.
+**Thus, $X$ being full rank alone, does not guarnatee a trivial kernel and invertibility. In addition to the rank of a matrix, whether or not it has a trivial kernel and is invertible, depends on the shape of the matrix!**
 
 Let us examine the three possible cases.
 
